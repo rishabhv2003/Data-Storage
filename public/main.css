@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.main .header {
+    background-color: #272727;
+    height: 3.5rem;
+    margin-bottom: 2%;
+}
+
+.main .header h1 {
+    text-align: center;
+    color: aliceblue;
+}
+
+.middle-body {
+    margin-top: 10%;
+    height: 300px;
+}
+
+.center {
+    border: 1px solid;
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+
+.middle-body form {
+    text-align: center;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
