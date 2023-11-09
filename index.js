@@ -1,9 +1,11 @@
-require('dotenv').config();
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose')
-app.use(express.static('public'));
+require('dotenv').config();
 
+const saveDataModel = require('./models/dataSchema.js');
+
+// connecting to mongodb
 const mongoUrl = process.env.MONGO_URI;
 mongoose.set('strictQuery', true).connect(mongoUrl, {
     useNewUrlParser: true,
@@ -14,26 +16,30 @@ mongoose.set('strictQuery', true).connect(mongoUrl, {
     console.log("Database not connected " + err);
 });
 
-const saveDataModel = require('./models/dataSchema.js'); 
+// setting up middlewares
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.static('public'));
+app.set('view engine', 'ejs');
 
 // home page
-app.get('/', (req,res)=>{
-    res.render(__dirname + '/public/index.html');
+app.get('/', (req, res) => {
+    res.render('index');
 })
 
 // page when document save request is sent.
-app.get('/save',(req,res)=>{
+app.get('/save', (req, res) => {
     res.render(__dirname + '/public/saved.html');
 })
 
 
-app.get("/health", (req,res) => {
+app.get("/health", (req, res) => {
     res.send('Server health is perfect');
 })
 
 
-const port = process.env.PORT ;
-const host = process.env.HOST ;
-app.listen(port,()=>{
-    console.log(`App is listening on Port https://${host}/${port}`);
+const port = process.env.PORT || 3000;
+const host = process.env.HOST || 'localhost';
+app.listen(port, () => {
+    console.log(`App is listening on Port http://${host}:${port}`);
 })
